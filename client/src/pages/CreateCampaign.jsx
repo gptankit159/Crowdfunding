@@ -19,7 +19,12 @@ const CreateCampaign=()=> {
     image:''
   })
 
-  const handleSubmit=()=>{
+  const handleFormChange=(fieldName, e)=>{
+      setForm({...form,[fieldName]:e.target.value})
+  }
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    console.log(form);
 
   }
   return (
@@ -37,18 +42,61 @@ const CreateCampaign=()=> {
             placeholder = "John Doe"
             inputType = "text"
             value = {form.name}
-            handleChange={()=>{}}
+            handleChange={(e)=>handleFormChange("name",e)}
           />
           <FormField 
-            LabelName = "Campaign Title"
+            LabelName = "Campaign Title *"
             placeholder = "Write a title"
             inputType = "text"
             value = {form.title}
-            handleChange={()=>{}}
+            handleChange={(e)=>handleFormChange("title",e)}
           />
 
         </div>
-
+        <FormField 
+            LabelName = "Story *"
+            placeholder = "Write your story"
+            isTextArea
+            inputType = "text"
+            value = {form.description}
+            handleChange={(e)=>handleFormChange("description",e)}
+          />
+        <div className='w-full flex justify-start items-center p-4 bg-[#8c6dfd] h-[120px] rounded-[10px]'>
+          <img src={money} alt="money" className='w-[40px] h-[40px] object-contain' />
+          <h4 className='font-epilogue font-bold text-[25px] text-white ml-[20px]'>
+            You will get 100% of the raised amount
+          </h4>
+        </div>
+        <div className='flex flex-wrap gap-[40px]'>
+          <FormField 
+            LabelName = "Goal *"
+            placeholder = "ETH 0.50"
+            inputType = "text"
+            value = {form.target}
+            handleChange={(e)=>handleFormChange("target",e)}
+          />
+          <FormField 
+            LabelName = "End Date *"
+            placeholder = "End Date"
+            inputType = "date"
+            value = {form.deadline}
+            handleChange={(e)=>handleFormChange("deadline",e)}
+          />
+          </div>
+          <FormField 
+            LabelName = "Campaign image*"
+            placeholder = "Place image URL of your campaign"
+            inputType = "url"
+            value = {form.image}
+            handleChange={(e)=>handleFormChange("image",e)}
+          />
+          <div className='flex justify-center items-center mt-[40px]'>
+            <CustomButton 
+              btnType="submit"
+              title="Submit new campaign"
+              styles="bg-[#1dc071]"
+            />
+        </div>
       </form>
     </div>
   )
