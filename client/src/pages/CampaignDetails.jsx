@@ -1,15 +1,15 @@
 import React,{useState,useEffect} from 'react'
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {ethers} from 'ethers';
 
 import { useStateContext } from '../context';
-import {CustomButton} from '../components'
+import {CountBox, CustomButton, Loader} from '../components'
 import { calculateBarPercentage, daysLeft } from '../utils';
 import { thirdweb } from '../assets';
-import {CountBox} from '../components';
 
 function CampaignDetails() {
   const {state} = useLocation();
+  const navigate = useNavigate();
   const{donate, getDonations, contract, address} = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -29,13 +29,14 @@ function CampaignDetails() {
   const handleDonate = async ()=>{
     setIsLoading(true);
     await donate(state.pId, amount);
+    navigate('/');
     setIsLoading(false);
 
   }
   // console.log(state);
   return (
     <div>
-      {isLoading && 'Loading...'}
+      {isLoading && <Loader />}
       <div className='w-full flex md:flex-row flex-col mt-10 gap-[30px]'>
         <div className='flex-1 flex-col'>
           <img src={state.image} alt="campaign" className='w-full h-[410px] object-cover rounded-xl' />
